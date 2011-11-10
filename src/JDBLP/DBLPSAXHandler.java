@@ -18,11 +18,11 @@ public class DBLPSAXHandler extends DefaultHandler {
      * w/o setting the list, empty result will be returned
      * @param authorList 
      */
-    public void setList(List<DBLPObject> objectList) {
+    public void setResultList(List<DBLPObject> objectList) {
         mObjectList = objectList;
     }
     
-    public List<DBLPObject> getList() {
+    public List<DBLPObject> getResultList() {
         return mObjectList;
     }
 }

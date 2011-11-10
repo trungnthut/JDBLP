@@ -11,7 +11,7 @@ import java.util.Map;
  *
  * @author trungnt
  */
-public class DBLPObject {
+public class DBLPObject<T> {
     private static Map<String, DBLPObject> sObjectMap = new HashMap<String, DBLPObject>();
     
     public String key() {

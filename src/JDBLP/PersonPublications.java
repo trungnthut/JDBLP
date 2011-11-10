@@ -41,11 +41,11 @@ public class PersonPublications {
         }
     }
 
-    public static PersonPublications searchPersonPublications(String personName) {
+    public static PersonPublications search(String personName) {
         return sPersonPublicationsMap.get(personName);
     }
     
-    public static List<PersonPublications> queryPersonPublications(String urlpt) throws Exception {
+    public static List<PersonPublications> query(String urlpt) throws Exception {
         sFoundPersonPublications.clear();
         InputStream result = DBLPGetter.queryPersonPublish(urlpt);
         sSaxParser.parse(result, sXMLHandler);
@@ -74,13 +74,13 @@ public class PersonPublications {
         sPersonPublicationsMap.put(personName, this);
     }
 
-    private static PersonPublications createPersonPublication(String personName) {
+    private static PersonPublications create(String personName) {
         if (personName.length() <= 0) {
             return null;
         }
-        PersonPublications pp = searchPersonPublications(personName);
+        PersonPublications pp = search(personName);
         if (pp != null) {
-            return searchPersonPublications(personName);
+            return search(personName);
         }
         pp = new PersonPublications(personName);
         return pp;
@@ -99,7 +99,7 @@ public class PersonPublications {
             if (rawName.equals("dblpperson")) {
                 mParsing = true;
                 String name = attrs.getValue("name");
-                mPerson = createPersonPublication(name);
+                mPerson = create(name);
             } else if (mParsing && rawName.equals("dblpkey") && mPerson != null) {
                 mPublication = "";
                 mInPublication = true;

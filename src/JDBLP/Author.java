@@ -41,11 +41,11 @@ public class Author {
         }
     }
 
-    public static Author searchAuthor(String name) {
+    public static Author search(String name) {
         return sAuthorMap.get(name);
     }
 
-    public static List<Author> queryAuthors(String name) throws Exception {
+    public static List<Author> query(String name) throws Exception {
         sFoundAuthors.clear();
         InputStream result = DBLPGetter.queryAuthor(name);
         sSaxParser.parse(result, sXMLHandler);
@@ -66,9 +66,9 @@ public class Author {
         sAuthorMap.put(name, this);
     }
 
-    private static Author createAuthor(String name, String urlpt) {
+    private static Author create(String name, String urlpt) {
         // TODO: what is 2 authors have same name
-        Author a = searchAuthor(name);
+        Author a = search(name);
         if (a == null) {
             a = new Author(name, urlpt);
         }
@@ -95,7 +95,7 @@ public class Author {
         public void endElement(String namespaceURI, String localName,
                 String rawName) throws SAXException {
             if (rawName.equals("author") && mName.length() > 0) {
-                sFoundAuthors.add(createAuthor(mName, mUrlpt));
+                sFoundAuthors.add(create(mName, mUrlpt));
             }
         }
 
