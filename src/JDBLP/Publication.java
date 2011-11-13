@@ -71,6 +71,10 @@ public class Publication {
     }
     
     public static Publication query(String key) throws Exception {
+        Publication pub = search(key);
+        if (pub != null) {
+            return pub;
+        }
         sFoundPublication = null;
         InputStream result = DBLPGetter.queryRecord(key);
         sSaxParser.parse(result, sXMLHandler);

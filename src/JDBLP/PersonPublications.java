@@ -27,7 +27,7 @@ public class PersonPublications {
     private List<String> mPublications;
     private static SAXParser sSaxParser;
     private static PersonPublicationsHandler sXMLHandler;
-    private static List<PersonPublications> sFoundPersonPublications = new ArrayList<PersonPublications>();
+    private static PersonPublications sFoundPersonPublications;
 
     static {
         try {
@@ -45,8 +45,7 @@ public class PersonPublications {
         return sPersonPublicationsMap.get(personName);
     }
     
-    public static List<PersonPublications> query(String urlpt) throws Exception {
-        sFoundPersonPublications.clear();
+    public static PersonPublications query(String urlpt) throws Exception {
         InputStream result = DBLPGetter.queryPersonPublish(urlpt);
         sSaxParser.parse(result, sXMLHandler);
         return sFoundPersonPublications;
@@ -97,6 +96,7 @@ public class PersonPublications {
         public void startElement(String namespaceURI, String localName,
                 String rawName, Attributes attrs) throws SAXException {
             if (rawName.equals("dblpperson")) {
+                sFoundPersonPublications = null;
                 mParsing = true;
                 String name = attrs.getValue("name");
                 mPerson = create(name);
@@ -115,7 +115,7 @@ public class PersonPublications {
                 }
                 mInPublication = false;
             } else if (rawName.equals("dblpperson") && mPerson != null) {
-                sFoundPersonPublications.add(mPerson);
+                sFoundPersonPublications = mPerson;
             }
         }
 
